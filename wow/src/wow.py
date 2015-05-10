@@ -81,7 +81,7 @@ class Wow:
         base = self._get_other_achievements(page)
         
         total = self._get_total_achievement(page)
-        print('total', total)
+        
         if total:
             base['total'] = total
 
@@ -108,5 +108,5 @@ class Wow:
             self.achievement_text = text
             return self._parse_achievements(text)
 
-a = Wow()
-text = a.get_user_achievements('xtreme', 'quelthalas')
+#a = Wow()
+#text = a.get_user_achievements('xtreme', 'quelthalas')
