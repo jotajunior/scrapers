@@ -153,13 +153,15 @@ class Wow:
             self.statistics = self._parse_statistics(text)
 
             return self.statistics
-import time
-start_time = time.time()
 
-for i in range(10):
-    a = Wow()
-    print(a.get_user_statistics('xtreme', 'quelthalas'))
-    print(a.get_user_achievements('xtreme', 'quelthalas'))
-    print(a.user_exists('xtreme', 'quelthalas'))
+    def get_user_info(self, name, world):
+        result = {}
+        result['stats'] = self.get_user_statistics(name, world)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+        if not result['stats']:
+            return False
+
+        result['achievements'] = self.get_user_achievements(name, world)
+
+        return result
+        

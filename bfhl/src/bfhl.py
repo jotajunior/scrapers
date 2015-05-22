@@ -18,19 +18,19 @@ class BFHL:
         if not output or output not in self.outputs:
             raise Exception('BFHL: Invalid output.')
 
-    def __init__(self, platform = 'pc'):
+    def __init__(self, platform='pc'):
         self.set_platform(platform)
         self.check_platform(self.platform)
 
-    def get_basic_parameters(self, platform = None, output = None):
+    def get_basic_parameters(self, platform=None, output=None):
         platform = platform if platform else self.platform
-        output = output if output else 'pc'
+        output = output if output else 'json'
 
         return {'plat': platform, 'output': output}
 
-    def get_player_by_name(self, name, output = None, platform = None):
+    def get_player_by_name(self, name, output=None, platform=None):
         if not output:
-            output = 'json'
+            output = self.output
 
         if not platform:
             platform = self.platform
@@ -43,3 +43,10 @@ class BFHL:
         url = self.base_url + '/playerInfo'
 
         return requests.get(url, params = data).text
+
+    def user_exists(self, name, platform=None):
+        if not platform:
+            platform = self.platform
+
+        result = self.get_player_by_name(name, 'json', platform)
+        return result != '{"error":"notFound"}'

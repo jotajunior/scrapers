@@ -42,7 +42,7 @@ class Riot:
     def set_region(self, region):
         self.region = self.standardize_name(region) 
 
-    def __init__(self, api_key, region = None):
+    def __init__(self, api_key, region=None):
         self.api_key = api_key
         self.set_region(region)
         self.init_valid_regions()
@@ -57,8 +57,6 @@ class Riot:
     def parse_name_list(self, names):
         if not names:
             return False
-
-        names = str(names)
 
         if isinstance(names, list):
             names = ','.join(names)
@@ -96,6 +94,13 @@ class Riot:
         url += '/' + names + self.get_api_key_query_string()
         
         return requests.get(url).text
+
+    def user_exists_by_name(self, name):
+        result = self.get_summoner_by_name(name)
+        if result.find('HTTP ERROR 404') == -1:
+            return True
+        else:
+            return False
 
     def get_summoner_by_id(self, ids):
         self.init_summoner_url()
