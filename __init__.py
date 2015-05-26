@@ -19,10 +19,9 @@ def bfhl_exists(name):
     bf = bfhl.BFHL(platform)
     return str(bf.user_exists(name))
 
-@app.route('/riot/exists/<name>')
+@app.route('/riot/exists/<name>/<region>')
 @cache.cached(timeout=1440)
-def riot_exists(name):
-    region = 'na'
+def riot_exists(name, region):
     r = riot.Riot(config.RIOT_API_KEY, region)
     
     return str(r.user_exists_by_name(name))
