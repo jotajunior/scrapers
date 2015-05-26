@@ -27,10 +27,10 @@ def riot_exists(name, region):
     
     return str(r.user_exists_by_name(name))
 
-@app.route('/wow/user/<name>/<world>')
+@app.route('/wow/user/<name>/<world>/<region>')
 @cache.cached(timeout=1440)
-def wow_user(name, world):
-    w = wow.Wow()
+def wow_user(name, world, region):
+    w = wow.Wow(region)
     return str(w.get_user_info(name, world))
 
 if __name__ == '__main__':

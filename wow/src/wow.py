@@ -2,16 +2,27 @@ import requests
 import lxml.html
 
 class Wow:
-    base_url = 'http://us.battle.net/wow/en'
+    base_url = 'http://{0}.battle.net/wow/en'
     # 0 => world, 1 => name
     character_url = '/character/{0}/{1}/simple'
     achievement_url = '/character/{0}/{1}/achievement'
     statistic_url = '/character/{0}/{1}/statistic'
 
+    ACCEPTED_REGIONS = ['eu', 'us']
+
     achievements = None
     statistics = None
 
     character_text = None
+
+    def __init__(self, region='us'):
+        region = region.lower()
+        
+        if region not in self.ACCEPTED_REGIONS:
+            raise Exception('Invalid region.')
+
+        self.region = region
+        self.base_url = self.base_url.format(region)
 
     def is_404(self, text):
         return text.find('<h3>Character Not Available</h3>') != -1
