@@ -22,6 +22,7 @@ def bfhl_exists(name):
 @app.route('/riot/exists/<name>/<region>')
 @cache.cached(timeout=1440)
 def riot_exists(name, region):
+    region = region.lower()
     r = riot.Riot(config.RIOT_API_KEY, region)
     
     return str(r.user_exists_by_name(name))
