@@ -19,6 +19,15 @@ def bfhl_exists(name):
     bf = bfhl.BFHL(platform)
     return str(bf.user_exists(name))
 
+@app.route('/bf4/exists/<name>')
+@cache.cached(timeout=1440)
+def bfhl_exists(name):
+    platform = 'pc'
+    output = 'json'
+
+    bf = bfhl.BF4(platform)
+    return str(bf.user_exists(name))
+
 @app.route('/riot/exists/<name>/<region>')
 @cache.cached(timeout=1440)
 def riot_exists(name, region):
